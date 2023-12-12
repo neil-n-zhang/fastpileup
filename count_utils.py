@@ -2,7 +2,6 @@
 # Written by Nathaniel Lim (May 2014) for Joshua Mell and Rosie Redfield.
 # Written for Python 3
 # Modified by Neil Zhang (Dec 2023)
-# Output columns are: chr pos A C G T N a c g t n IN DEL indel
 # Last field is only written for positions that indels were detected (i.e. leaves last column ragged).
 # Indel field specifies counts of each insertion detected following the position and each deletion including the position.
 
@@ -128,7 +127,7 @@ def base_counter(InputRow):
     
     # Internal Check - Throws Out Error (NOT STD-IN/OUT Compatible: Should break pipeline)
     InternalCounter = 0
-    InternalCounter = bigA + bigC + bigG + bigT + bigN + smallA + smallC + smallG + smallT + smallN + delBase
+    InternalCounter = bigA + smallA + bigC + smallC + bigG + smallG + bigT + smallT + bigN + smallN + delBase
     if InternalCounter != int(InputList[3]):
         print('Error at position: ' + InputList[1])
         print('Reported count: ' + InputList[3])
@@ -151,7 +150,7 @@ def base_counter(InputRow):
     
     # Return Output
     #FinalOutput = InputList[0] + '\t' + InputList[1] + '\t' + str(bigA) + '    ' + str(bigC) + '    ' + str(bigG) + '    ' + str(bigT) + '    ' + str(bigN) + '    ' + str(smallA) + '    ' + str(smallC) + '    ' + str(smallG) + '    ' + str(smallT) + '    ' + str(smallN) + '    ' + str(countIn) + '    ' + str(countDel) + '    ' + ';'.join(FinalIndelHolder)
-    FinalOutput = "\t".join([InputList[0],InputList[1],str(bigA),str(bigC),str(bigG),str(bigT),str(bigN),str(smallA),str(smallC),str(smallG),str(smallT),str(smallN),str(countIn),str(countDel)])+ '\t' + ';'.join(FinalIndelHolder)
+    FinalOutput = "\t".join([InputList[0],InputList[1],InputList[2],str(bigA),str(smallA),str(bigC),str(smallC),str(bigG),str(smallG),str(bigT),str(smallT),str(bigN),str(smallN),str(countIn),str(countDel)])+ '\t' + ';'.join(FinalIndelHolder)
     
     return FinalOutput
 

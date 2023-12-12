@@ -39,7 +39,7 @@ def pileup_region(args):
     pool.join()
 
     output_file = open(args.sample+"_count.txt", "w")
-    output_file.write("chr\tpos\tA\tC\tG\tT\tN\ta\tc\tg\tt\tn\tIN\tDEL\tindel\n")
+    output_file.write("chr\tpos\tref\tA\ta\tC\tc\tG\tg\tT\tt\tN\tn\tIN\tDEL\tindel\n")
     output_file.close()
     cmd = 'cat {i} >> {o}'.format(i=' '.join(outfiles_txt), o=args.sample+"_count.txt")
     subprocess.check_output(cmd, shell=True)
@@ -97,7 +97,7 @@ def pileup_bed(args):
     pool.join()
 
     output_file = open(args.sample+"_count.txt", "w")
-    output_file.write("chr\tpos\tA\tC\tG\tT\tN\ta\tc\tg\tt\tn\tIN\tDEL\tindel\n")
+    output_file.write("chr\tpos\tref\tA\ta\tC\tc\tG\tg\tT\tt\tN\tn\tIN\tDEL\tindel\n")
     output_file.close()
     cmd = 'cat {i} >> {o}'.format(i=' '.join(outfiles_txt), o=args.sample+"_count.txt")
     subprocess.check_output(cmd, shell=True)
