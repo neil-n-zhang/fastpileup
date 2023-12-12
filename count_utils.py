@@ -16,6 +16,7 @@ def base_counter(InputRow):
     InputList = []
     InputList = InputRow.split(sep = '\t')
 
+    # If pileup was ran with reference genome, InputList[2] is the reference nucleotide
     if InputList[2] in ["A","T","C","G"]:
         InputList[4]=InputList[4].replace(".",InputList[2]).replace(",",InputList[2].lower())
     
@@ -23,12 +24,14 @@ def base_counter(InputRow):
     CleanString = ''
     countIn = 0
     countDel = 0
+    # Indel nucleotide sequences
     IndelHolder = []
     IndelDeterminant = 0
     CleanBool = False
     
     for currentIndex, Strholder in enumerate(InputList[4]):
         # Skipping of '^' Signage
+		# '^' stands for the read start, the string after it encodes the mapping quality of the read, which will also be skipped
         if CleanBool == True:
             CleanBool = False
             continue
@@ -37,7 +40,7 @@ def base_counter(InputRow):
             CleanBool = True
             continue
         
-        # Skipping Indel
+        # Skipping Indel: skip "IndelDeterminant" number of characters for Indel sequence
         if IndelDeterminant > 0:
             IndelDeterminant -= 1
             continue
@@ -45,7 +48,7 @@ def base_counter(InputRow):
         if Strholder == '+':
             countIn += 1
             
-            # Determining Length of Indel
+            # Determining Length of Indel (IndelDeterminant)
             # Since Illumina NGS has an upper limit of less than 999bp read length
             IndelDeterminant = 0
             
@@ -87,11 +90,11 @@ def base_counter(InputRow):
             
             IndelHolder.append(InputList[4][currentIndex: currentIndex + len(str(IndelDeterminant)) + 1])
             continue
-        
+
+		# if the Strholder is not related with read start or indel, add it to CleanString
         CleanString += Strholder
     
-    else:
-    # Transferring Back Cleaned String
+        # Transferring Back Cleaned String
         InputList[4] = CleanString
         
         # '$' Signage Stripping

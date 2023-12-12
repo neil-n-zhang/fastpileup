@@ -115,7 +115,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(required=True)
 
-    # create the parser for the "foo" command
+    # Pileup for a genomic region
     parser_reg = subparsers.add_parser('region')
     parser_reg.add_argument('-sample')
     parser_reg.add_argument('-bam')
@@ -125,6 +125,7 @@ if __name__ == '__main__':
     parser_reg.add_argument('-ref')
     parser_reg.set_defaults(func=pileup_region)
 
+    # Pileup for regions in a bed file
     parser_bed = subparsers.add_parser('bed')
     parser_bed.add_argument('-sample')
     parser_bed.add_argument('-bam')
